@@ -40,7 +40,7 @@ usermod -aG sudo ${USER_NAME}
 chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}
 mkdir -p /home/${USER_NAME}/.ssh
 echo "${SSH_PUB}" >> /home/${USER_NAME}/.ssh/authorized_keys
-chmod 600 /home/${USER_NAME}/.ssh/authorized_keys
+chmod -R 600 /home/${USER_NAME}/.ssh
 chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}/.ssh
 
 # 配置 git
