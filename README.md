@@ -1,4 +1,4 @@
-# Python Worknode
+# Docker of Python Devlopment Box
 
 This repository contains the configuration and code to build and publish a Docker image for a Python development environment.
 
