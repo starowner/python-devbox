@@ -48,8 +48,8 @@ chmod 600 /home/${USER_NAME}/.ssh/authorized_keys
 chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}/.ssh
 
 # 配置 git
-sudo -u ${USER_NAME} git config user.name "${GIT_NAME}"
-sudo -u ${USER_NAME} git config user.email "${GIT_EMAIL}"
+sudo -u ${USER_NAME} git config --global user.name "${GIT_NAME}"
+sudo -u ${USER_NAME} git config --global user.email "${GIT_EMAIL}"
 
 # 安装 APT 包
 if [ -n "${APT_PACKAGES}" ]; then
