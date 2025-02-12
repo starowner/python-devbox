@@ -37,11 +37,12 @@ echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
 usermod -aG sudo ${USER_NAME}
 
 # 创建 .ssh 目录并设置权限
-chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}
-mkdir -p /home/${USER_NAME}/.ssh
-echo "${SSH_PUB}" >> /home/${USER_NAME}/.ssh/authorized_keys
-chmod -R 600 /home/${USER_NAME}/.ssh
-chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}/.ssh
+if [ -n "${SSH_PUB}" ]; then
+    mkdir -p /home/${USER_NAME}/.ssh
+    echo "${SSH_PUB}" >> /home/${USER_NAME}/.ssh/authorized_keys
+    chmod 600 /home/${USER_NAME}/.ssh/authorized_keys
+    chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}/.ssh
+fi
 
 # 配置 git
 sudo -u ${USER_NAME} git config --global user.name "${GIT_NAME}"
