@@ -19,11 +19,6 @@ if [ -z "${USER_PASSWORD}" ]; then
     exit 1
 fi
 
-if [ -z "${SSH_PUB}" ]; then
-    echo "Error: SSH_PUB is required."
-    exit 1
-fi
-
 if [ -z "${GIT_NAME}" ]; then
     echo "Error: GIT_NAME is required."
     exit 1

@@ -24,18 +24,18 @@ EXPOSE 22
 # 设置环境变量，默认值为空
 ENV USER_NAME=""
 ENV USER_PASSWORD=""
-ENV SSH_PUB=""
 ENV GIT_NAME=""
 ENV GIT_EMAIL=""
 #可选，默认值为空
+ENV SSH_PUB=""
 ENV APT_PACKAGES=""
 
 # 环境变量说明
 # USER_NAME: 新用户的用户名 (必须)
 # USER_PASSWORD: 新用户的密码 (必须)
-# SSH_PUB: 新用户的 SSH 公钥 (必须)
 # GIT_NAME: Git 用户的姓名 (必须)
 # GIT_EMAIL: Git 用户的邮箱 (必须)
+# SSH_PUB: 新用户的 SSH 公钥 (可选)
 # APT_PACKAGES: 要安装的 APT 软件包，以空格分隔 (可选)
 
 # 设置容器启动时执行的命令
