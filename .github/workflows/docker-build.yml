@@ -6,11 +6,11 @@ on:
       - main  # 根据需要替换为您的主分支名称
 
 env:
-  DOCKER_NAME: PYTHON-WORKNODE # 在这里定义您的 Docker 镜像名称
+  DOCKER_NAME: python-devbox # 在这里定义您的 Docker 镜像名称
   DOCKER_VERSION: v0.1  # 在这里定义版本号
 
 jobs:
-  build:
+  build-docker-image:
     runs-on: ubuntu-latest
 
     steps:
