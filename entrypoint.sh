@@ -37,6 +37,7 @@ echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
 usermod -aG sudo ${USER_NAME}
 
 # 创建 .ssh 目录并设置权限
+chmod -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}
 mkdir -p /home/${USER_NAME}/.ssh
 echo "${SSH_PUB}" >> /home/${USER_NAME}/.ssh/authorized_keys
 chmod 600 /home/${USER_NAME}/.ssh/authorized_keys
