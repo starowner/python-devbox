@@ -1,14 +1,15 @@
 #!/bin/bash
 
-# 从环境变量中获取参数
+# Get parameters from environment variables
 USER_NAME=${USER_NAME}
 USER_PASSWORD=${USER_PASSWORD}
 SSH_PUB=${SSH_PUB}
 GIT_NAME=${GIT_NAME}
 GIT_EMAIL=${GIT_EMAIL}
 APT_PACKAGES=${APT_PACKAGES}
+PYTHON_PACKAGES=${PYTHON_PACKAGES}
 
-# 检查必需的环境变量是否设置
+# Check if required environment variables are set
 if [ -z "${USER_NAME}" ]; then
     echo "Error: USER_NAME is required."
     exit 1
@@ -29,14 +30,14 @@ if [ -z "${GIT_EMAIL}" ]; then
     exit 1
 fi
 
-# 创建新用户并设置密码
+# Create new user and set password
 useradd -m -s /bin/bash ${USER_NAME}
 echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
 
-# 将用户加入 sudo 用户组
+# Add user to sudo group
 usermod -aG sudo ${USER_NAME}
 
-# 创建 .ssh 目录并设置权限
+# Create .ssh directory and set permissions
 if [ -n "${SSH_PUB}" ]; then
     mkdir -p /home/${USER_NAME}/.ssh
     echo "${SSH_PUB}" >> /home/${USER_NAME}/.ssh/authorized_keys
@@ -44,15 +45,21 @@ if [ -n "${SSH_PUB}" ]; then
     chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}/.ssh
 fi
 
-# 配置 git
+# Configure git
 sudo -u ${USER_NAME} git config --global user.name "${GIT_NAME}"
 sudo -u ${USER_NAME} git config --global user.email "${GIT_EMAIL}"
 
-# 安装 APT 包
+# Install APT packages
 if [ -n "${APT_PACKAGES}" ]; then
     echo "Installing APT packages: ${APT_PACKAGES}"
-    apt-get update && apt-get install -y ${APT_PACKAGES}
+    sudo -u ${USER_NAME} bash -c "sudo apt-get update && sudo apt-get install -y ${APT_PACKAGES}"
 fi
 
-# 启动 SSH 服务
+# Install Python modules
+if [ -n "${PYTHON_PACKAGES}" ]; then
+    echo "Installing Python packages: ${PYTHON_PACKAGES}"
+    sudo -u ${USER_NAME} bash -c "pip install ${PYTHON_PACKAGES}"
+fi
+
+# Start SSH service
 exec /usr/sbin/sshd -D

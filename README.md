@@ -32,6 +32,7 @@ The Dockerfile is used to create the Docker image. It is based on `python:3.10-s
 - `GIT_EMAIL`: Git user's email (required).
 - `SSH_PUB`: New user's SSH public key (optional).
 - `APT_PACKAGES`: Optional APT packages to install, space-separated (optional).
+- `PYTHON_PACKAGES`: Python modules to install, space-separated (optional).
 
 ## Usage
 
@@ -53,10 +54,10 @@ docker run -d \
   -e SSH_PUB=<ssh-public-key> \
   -e GIT_NAME=<git-name> \
   -e GIT_EMAIL=<git-email> \
-  -e APT_PACKAGES="<optional-packages>" \
+  -e APT_PACKAGES="<optional-APT-packages>" \
+  -e PYTHON_PACKAGES="<optional-python-packages>" \
   ghcr.io/starowner/python-devbox:latest
 ```
-
 
 ## License
 

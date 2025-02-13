@@ -1,42 +1,44 @@
-# 使用 python:3.10-slim 作为基础镜像
+# Use python:3.10-slim as the base image
 FROM python:3.10-slim
 
 USER root
 
-# 更新包列表并安装 openssh-server 和 git
+# Update package list and install openssh-server and git
 RUN apt-get update && \
     apt-get install -y openssh-server git sudo && \
     rm -rf /var/lib/apt/lists/*
 
-# 创建 SSH 服务所需的目录
+# Create directory needed for SSH service
 RUN mkdir /var/run/sshd
 
-# 禁止 root 用户通过 SSH 登录
+# Disable root login via SSH
 RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config
 
-# 复制入口脚本到容器中并设置权限
+# Copy entrypoint script to the container and set permissions
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# 暴露 SSH 端口
+# Expose SSH port
 EXPOSE 22
 
-# 设置环境变量，默认值为空
+# Set environment variables, default values are empty
 ENV USER_NAME=""
 ENV USER_PASSWORD=""
 ENV GIT_NAME=""
 ENV GIT_EMAIL=""
-#可选，默认值为空
+# Optional, default values are empty
 ENV SSH_PUB=""
 ENV APT_PACKAGES=""
+ENV PYTHON_PACKAGES=""
 
-# 环境变量说明
-# USER_NAME: 新用户的用户名 (必须)
-# USER_PASSWORD: 新用户的密码 (必须)
-# GIT_NAME: Git 用户的姓名 (必须)
-# GIT_EMAIL: Git 用户的邮箱 (必须)
-# SSH_PUB: 新用户的 SSH 公钥 (可选)
-# APT_PACKAGES: 要安装的 APT 软件包，以空格分隔 (可选)
+# Environment variable descriptions
+# USER_NAME: New user's username (required)
+# USER_PASSWORD: New user's password (required)
+# GIT_NAME: Git user's name (required)
+# GIT_EMAIL: Git user's email (required)
+# SSH_PUB: New user's SSH public key (optional)
+# APT_PACKAGES: APT packages to install, space-separated (optional)
+# PYTHON_PACKAGES: Python modules to install, space-separated (optional)
 
-# 设置容器启动时执行的命令
+# Set the command to run when the container starts
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
